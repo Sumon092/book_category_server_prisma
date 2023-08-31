@@ -3,8 +3,6 @@ import app from './app';
 
 import config from './config';
 import { errorlogger, logger } from './shared/logger';
-const port = config.port;
-console.log(port, 'port is ');
 async function bootstrap() {
   const server: Server = app.listen(config.port, () => {
     logger.info(`Server running on port ${config.port}`);
