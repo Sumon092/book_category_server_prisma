@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { BookServices } from './book.services';
 
@@ -15,6 +16,25 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllBook = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, [
+    'searchTerm',
+    'minPrice',
+    'maxPrice',
+    'category',
+  ]);
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
+  const result = await BookServices.getAllBook(filters, options);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All book fetched successfully',
+    data: result,
+  });
+});
+
 export const BookControllers = {
   createBook,
+  getAllBook,
 };
