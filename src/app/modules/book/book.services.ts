@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Book, Prisma } from '@prisma/client';
 import prisma from '../../../constants/prisma';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { bookSearchableFields } from './book.constants';
+import {
+  bookSearchableFields,
+  generateNumericFilterCondition,
+} from './book.constants';
 import { IBookFilterRequest } from './book.interface';
 
 const createBook = async (bookData: Book): Promise<Book> => {
@@ -25,9 +30,9 @@ const getAllBook = async (
   options: IPaginationOptions
 ): Promise<IGenericResponse<Book[]>> => {
   const { page, limit, skip } = paginationHelpers.calculatePagination(options);
-  const { searchTerm, ...filtersData } = filters;
-  console.log(filtersData);
-  const andConditions = [];
+  const { searchTerm, ...filterData } = filters;
+
+  const andConditions: (Prisma.BookWhereInput | {})[] = [];
   if (searchTerm) {
     andConditions.push({
       OR: bookSearchableFields.map(field => ({
@@ -38,8 +43,77 @@ const getAllBook = async (
       })),
     });
   }
-  const whereConditions: Prisma.BookWhereInput =
-    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  // const filterConditions = Object.keys(filterData).map(key => {
+  //   if (key === 'category') {
+  //     return {
+  //       category: {
+  //         title: (filterData as any)[key],
+  //       },
+  //     };
+  //   } else if (key === 'minPrice') {
+  //     return {
+  //       price: {
+  //         gte: parseFloat((filterData as any)[key]),
+  //       },
+  //     };
+  //   } else if (key === 'maxPrice') {
+  //     return {
+  //       price: {
+  //         lte: parseFloat((filterData as any)[key]),
+  //       },
+  //     };
+  //   } else if (bookRelationalFields.includes(key)) {
+  //     return {
+  //       [bookRelationalFieldsMapper[key]]: {
+  //         id: (filterData as any)[key],
+  //       },
+  //     };
+  //   } else {
+  //     return {
+  //       [key]: {
+  //         equals: (filterData as any)[key],
+  //       },
+  //     };
+  //   }
+  // });
+
+  const filterConditions = Object.keys(filterData)
+    .map(key => {
+      if (key === 'category') {
+        return {
+          category: {
+            title: (filterData as any)[key],
+          },
+        };
+      } else if (key === 'minPrice') {
+        return generateNumericFilterCondition(
+          key,
+          (filterData as any)[key],
+          'gte'
+        );
+      } else if (key === 'maxPrice') {
+        return generateNumericFilterCondition(
+          key,
+          (filterData as any)[key],
+          'lte'
+        );
+      } else {
+        return {
+          [key]: {
+            equals: (filterData as any)[key],
+          },
+        };
+      }
+    })
+    .filter(condition => condition !== null);
+
+  andConditions.push({
+    AND: filterConditions,
+  });
+
+  const whereConditions: Prisma.BookWhereInput | undefined =
+    andConditions.length > 0 ? { AND: andConditions } : undefined;
   const result = await prisma.book.findMany({
     where: whereConditions,
     skip,
@@ -52,6 +126,9 @@ const getAllBook = async (
         : {
             createdAt: 'desc',
           },
+    include: {
+      category: true,
+    },
   });
   const total = await prisma.book.count();
   const totalPage = Math.ceil(total / limit);

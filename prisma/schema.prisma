@@ -87,7 +87,6 @@ model Order {
   status      orderStatus  @default(pending)
   createdAt   DateTime     @default(now())
   orderdBook  OrderdBook[]
-  
 
   @@map("orders")
 }
