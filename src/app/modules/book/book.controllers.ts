@@ -8,7 +8,6 @@ import { BookServices } from './book.services';
 
 const createBook = catchAsync(async (req: Request, res: Response) => {
   const result = await BookServices.createBook(req.body);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -17,11 +16,11 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
 const getAllBook = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookFilterableFields);
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
   const result = await BookServices.getAllBook(filters, options);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -29,6 +28,7 @@ const getAllBook = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 
 const getBookByCategoryId = catchAsync(async (req: Request, res: Response) => {
   const { categoryId } = req.params;
@@ -44,8 +44,22 @@ const getBookByCategoryId = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getBookById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await BookServices.getSingleBook(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book fetched successfully',
+    data: result,
+  });
+});
+
 export const BookControllers = {
   createBook,
   getAllBook,
   getBookByCategoryId,
+  getBookById,
 };
