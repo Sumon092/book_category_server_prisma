@@ -1,3 +1,4 @@
+import { Book } from '@prisma/client';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
@@ -16,7 +17,6 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const getAllBook = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookFilterableFields);
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
@@ -28,7 +28,6 @@ const getAllBook = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
 
 const getBookByCategoryId = catchAsync(async (req: Request, res: Response) => {
   const { categoryId } = req.params;
@@ -57,9 +56,36 @@ const getBookById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateBook = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const result = await BookServices.updateBook(id, payload);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book updated successfully',
+    data: result,
+  });
+});
+
+const deleteBook = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await BookServices.deleteBook(id);
+
+  sendResponse<Book | null>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book deleted successfully',
+    data: result,
+  });
+});
+
 export const BookControllers = {
   createBook,
   getAllBook,
   getBookByCategoryId,
   getBookById,
+  updateBook,
+  deleteBook,
 };
