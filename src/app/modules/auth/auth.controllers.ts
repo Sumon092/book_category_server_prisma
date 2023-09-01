@@ -16,6 +16,7 @@ const signUp = catchAsync(async (req: Request, res: Response) => {
     address: result.address,
     profileImg: result.profileImg,
   };
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
