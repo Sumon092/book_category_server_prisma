@@ -7,13 +7,8 @@ export const bookFilterableFields = [
   'category',
 ];
 
-export const bookRelationalFields: string[] = ['categoryId'];
-export const bookRelationalFieldsMapper: { [key: string]: string } = {
-  categoryId: 'category',
-};
-
 export function generateNumericFilterCondition(
-  key: string,
+  _key: string,
   filterValue: string,
   operator: 'gte' | 'lte'
 ): { price: { [x: string]: number } } | null {
