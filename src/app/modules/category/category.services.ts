@@ -13,6 +13,7 @@ const getAllCategory = async (): Promise<Category[]> => {
   return result;
 };
 
+
 export const CategoryServices = {
   createCategory,
   getAllCategory,
