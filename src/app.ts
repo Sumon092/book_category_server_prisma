@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import globalErrorHandler from './app/middleWares/globalErrorHandler';
 
 import cookieParser from 'cookie-parser';
 import routes from './app/routes';

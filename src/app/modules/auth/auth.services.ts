@@ -13,6 +13,18 @@ const signUp = async (userData: User): Promise<User> => {
       ...userInfo,
       password: hashedPassword,
     },
+    // select: {
+    //   id: true,
+    //   name: true,
+    //   email: true,
+    //   role: true,
+    //   password: true,
+    //   contactNo: true,
+    //   address: true,
+    //   profileImg: true,
+    //   createdAt: true,
+    //   updatedAt: true,
+    // },
   });
   return result;
 };
