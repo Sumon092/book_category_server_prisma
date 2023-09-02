@@ -4,7 +4,7 @@ import { Book, Prisma } from '@prisma/client';
 import prisma from '../../../constants/prisma';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
-import { IPaginationOptions } from '../../../interfaces/pagination';
+import { IPaginationOptions } from '../../../interfaces/pagination'; 
 import {
   bookSearchableFields,
   generateNumericFilterCondition,

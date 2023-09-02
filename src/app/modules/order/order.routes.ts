@@ -11,15 +11,16 @@ router.post(
   OrderControllers.createOrder
 );
 
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), OrderControllers.getAllOrder);
+router.get('/all', auth(ENUM_USER_ROLE.ADMIN), OrderControllers.getAllOrder);
+
 router.get(
-  '/:userId',
+  '/',
   auth(ENUM_USER_ROLE.CUSTOMER),
   OrderControllers.getOrdersByCustomer
 );
 
 router.get(
-  '/order/:orderId',
+  '/:orderId',
   auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
   OrderControllers.getOrderByCustomer
 );

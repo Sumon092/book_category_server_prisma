@@ -32,7 +32,7 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { userId } = req.params;
+  const { userId } = req.user?.userId;
   const result = await OrderServices.getOrdersByCustomer(userId);
 
   sendResponse(res, {
