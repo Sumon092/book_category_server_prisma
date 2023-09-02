@@ -22,7 +22,17 @@ const getAllOrder = async (): Promise<Order[]> => {
   return result;
 };
 
+const getOrdersByCustomer = async (userId: string): Promise<Order[] | null> => {
+  const result = await prisma.order.findMany({
+    where: {
+      userId,
+    },
+  });
+  return result;
+};
+
 export const OrderServices = {
   createOrder,
   getAllOrder,
+  getOrdersByCustomer,
 };

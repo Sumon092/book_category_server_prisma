@@ -15,12 +15,10 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Order created successful',
+    message: 'Order created successfully',
     data: result,
   });
 });
-
-
 
 const getAllOrder = catchAsync(async (req: Request, res: Response) => {
   const result = await OrderServices.getAllOrder();
@@ -28,7 +26,19 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Orders fetched successful',
+    message: 'Orders fetched successfully',
+    data: result,
+  });
+});
+
+const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const result = await OrderServices.getOrdersByCustomer(userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Orders by customer fetched successfully',
     data: result,
   });
 });
@@ -36,4 +46,5 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
 export const OrderControllers = {
   createOrder,
   getAllOrder,
+  getOrdersByCustomer,
 };
