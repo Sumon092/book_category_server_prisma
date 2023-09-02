@@ -7,7 +7,16 @@ const createOrder = async (payload: IOrderData): Promise<Order> => {
   const result = await prisma.order.create({
     data: {
       userId: payload.userId,
-      orderedBooks: payload.orderedBooks as any,
+      orderedBooks: payload.orderedBooks,
+    },
+  });
+  return result;
+};
+
+const getAllOrder = async (): Promise<Order[]> => {
+  const result = await prisma.order.findMany({
+    include: {
+      user: true,
     },
   });
   return result;
@@ -15,4 +24,5 @@ const createOrder = async (payload: IOrderData): Promise<Order> => {
 
 export const OrderServices = {
   createOrder,
+  getAllOrder,
 };
