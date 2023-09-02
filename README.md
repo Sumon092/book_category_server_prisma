@@ -10,28 +10,32 @@ You can access the live version of this application [here](https://book_category
 
 - **Route:** `POST /api/v1/auth/signup`
 - **Description:** Create a new user account.
+### 2. Login
 
-### 2. List Users
+- **Route:** `POST /api/v1/auth/login`
+- **Description:** Login route.
+
+### 3. List Users
 
 - **Route:** `GET /api/v1/users`
 - **Description:** Get a list of all users.
 
-### 3. Get User by ID
+### 4. Get User by ID
 
 - **Route:** `GET /api/v1/users/:userId`
 - **Description:** Get a single user by their ID.
 
-### 4. Update User
+### 5. Update User
 
 - **Route:** `PATCH /api/v1/users/:userId`
 - **Description:** Update a user's information by their ID.
 
-### 5. Delete User
+### 6. Delete User
 
 - **Route:** `DELETE /api/v1/users/:userId`
 - **Description:** Delete a user by their ID.
 
-### 6. Get Profile
+### 7. Get Profile
 
 - **Route:** `GET /api/v1/profile`
 - **Description:** Get the user's profile information.
