@@ -10,7 +10,6 @@ router.post(
   auth(ENUM_USER_ROLE.ADMIN),
   BookControllers.createBook
 );
-
 router.patch('/:id', auth(ENUM_USER_ROLE.ADMIN), BookControllers.updateBook);
 router.get('/', BookControllers.getAllBook);
 router.get('/:categoryId', BookControllers.getBookByCategoryId);

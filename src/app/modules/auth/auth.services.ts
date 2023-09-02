@@ -2,31 +2,33 @@ import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import config from '../../../config';
 import prisma from '../../../constants/prisma';
-const signUp = async (userData: User): Promise<User> => {
-  const { password, ...userInfo } = userData;
+
+function exclude<User, Key extends keyof User>(
+  user: User,
+  keys: Key[]
+): Omit<User, Key> {
+  const result: Partial<User> = {};
+  for (const key of Object.keys(user) as Key[]) {
+    if (!keys.includes(key)) {
+      result[key] = user[key];
+    }
+  }
+  return result as Omit<User, Key>;
+}
+const signUp = async (userData: User): Promise<Partial<User>> => {
+  const { password } = userData;
   const hashedPassword = await bcrypt.hash(
     password,
     Number(config.bcrypt_salt_rounds)
   );
-  const result = await prisma.user.create({
+  const excludePassword = exclude(userData, ['password']);
+  await prisma.user.create({
     data: {
-      ...userInfo,
+      ...excludePassword,
       password: hashedPassword,
     },
-    // select: {
-    //   id: true,
-    //   name: true,
-    //   email: true,
-    //   role: true,
-    //   password: true,
-    //   contactNo: true,
-    //   address: true,
-    //   profileImg: true,
-    //   createdAt: true,
-    //   updatedAt: true,
-    // },
   });
-  return result;
+  return excludePassword;
 };
 
 export const AuthServices = {

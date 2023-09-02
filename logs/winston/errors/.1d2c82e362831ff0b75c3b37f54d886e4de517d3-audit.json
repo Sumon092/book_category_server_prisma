@@ -84,6 +84,16 @@
             "date": 1693580406546,
             "name": "C:\\PH-Next\\assignment8\\logs\\winston\\errors\\phu-2023-01-09-21-error.log",
             "hash": "62ddad3f1ccb0ff2563cbe1da609cd86ed9dfc69afea57d260232d65459d18a4"
+        },
+        {
+            "date": 1693632106277,
+            "name": "C:\\PH-Next\\assignment8\\logs\\winston\\errors\\phu-2023-02-09-11-error.log",
+            "hash": "fb29a39f4901448bbf6a9e3578d0df5931fcdd51e92ca1d72ae93a12349e458b"
+        },
+        {
+            "date": 1693634418914,
+            "name": "C:\\PH-Next\\assignment8\\logs\\winston\\errors\\phu-2023-02-09-12-error.log",
+            "hash": "c42258675b0b5d3ecf1ac4cb4d4d4b0c872c6efbdc4e877fe04271ca9d4a8870"
         }
     ],
     "hashType": "sha256"

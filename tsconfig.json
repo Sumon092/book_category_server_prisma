@@ -1,6 +1,6 @@
 {
   "include": [
-    "src",
+    "src/**/*.ts",
     "src/app/modules/academicFaculty/academicFaculty.constant.ts",
     "logs/permission",
     "logs/userPermission"
