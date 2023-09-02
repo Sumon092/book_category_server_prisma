@@ -46,10 +46,10 @@ const login = async (email: string, providedPassword: string) => {
     throw new ApiError(httpStatus.OK, 'User no found');
   }
   const isPasswordValid = await bcrypt.compare(providedPassword, user.password);
-  const { email: userEmail, role } = user;
+  const { role, id: userId } = user;
   if (isPasswordValid) {
     const accessToken = jwtHelpers.createToken(
-      { userEmail, role },
+      { role, userId },
       config.jwt.secret as Secret,
       config.jwt.jwt_expires as string
     );

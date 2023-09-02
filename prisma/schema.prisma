@@ -80,13 +80,13 @@ enum orderStatus {
 }
 
 model Order {
-  id          String       @id @default(uuid())
-  userId      String
-  user        User         @relation(fields: [userId], references: [id])
-  orderdBooks Json[]
-  status      orderStatus  @default(pending)
-  createdAt   DateTime     @default(now())
-  orderdBook  OrderdBook[]
+  id           String       @id @default(uuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id])
+  orderedBooks Json[]
+  status       orderStatus  @default(pending)
+  createdAt    DateTime     @default(now())
+  orderedBook  OrderdBook[]
 
   @@map("orders")
 }
