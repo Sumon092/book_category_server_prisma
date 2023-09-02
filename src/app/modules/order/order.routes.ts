@@ -19,7 +19,7 @@ router.get(
 );
 
 router.get(
-  '/order/:id',
+  '/order/:orderId',
   auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
   OrderControllers.getOrderByCustomer
 );
