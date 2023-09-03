@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { OrderServices } from './order.services';
@@ -32,8 +33,9 @@ const getAllOrder = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
-  const { userId } = req.user?.userId;
-  const result = await OrderServices.getOrdersByCustomer(userId);
+  const id = req.user?.userId;
+
+  const result = await OrderServices.getOrdersByCustomer(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -45,9 +47,11 @@ const getOrdersByCustomer = catchAsync(async (req: Request, res: Response) => {
 
 const getOrderByCustomer = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
-  const userId = user?.userId;
   const { orderId } = req.params;
-  const result = await OrderServices.getOrderByCustomer(orderId, userId);
+  if (!user) {
+    throw new ApiError(404, 'User not found');
+  }
+  const result = await OrderServices.getOrderByCustomer(orderId, user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

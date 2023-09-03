@@ -1,6 +1,6 @@
+"use strict";
 // import { IGenericErrorResponse } from '../interfaces/common';
 // import { IGenericErrorMessage } from '../interfaces/error';
-
 // const handleValidationError = (
 //   error: mongoose.Error.ValidationError
 // ): IGenericErrorResponse => {
@@ -19,5 +19,4 @@
 //     errorMessages: errors,
 //   };
 // };
-
 // export default handleValidationError;

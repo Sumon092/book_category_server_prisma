@@ -1,6 +1,6 @@
 ## Live Link
 
-You can access the live version of this application [here](https://book_category.com).
+You can access the live version of this application [BOOK_CATEGORY](https://book_category.com).
 
 # Application Routes
 
@@ -10,6 +10,7 @@ You can access the live version of this application [here](https://book_category
 
 - **Route:** `POST /api/v1/auth/signup`
 - **Description:** Create a new user account.
+
 ### 2. Login
 
 - **Route:** `POST /api/v1/auth/login`
@@ -111,10 +112,10 @@ You can access the live version of this application [here](https://book_category
 - **Route:** `GET /api/v1/orders/all`
 - **Description:** Get a list of all orders.
 
-### 3. List Orders
+### 3. Get all Order for specific Customers
 
 - **Route:** `GET /api/v1/orders`
-- **Description:** Get a list of all orders.
+- **Description:** Get a list of all specific Customers orders.
 
 ### 3. Get Order by ID
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Order } from '@prisma/client';
 import httpStatus from 'http-status';
+import { JwtPayload } from 'jsonwebtoken';
 import prisma from '../../../constants/prisma';
 import ApiError from '../../../errors/ApiError';
 import { IOrderData } from './order.interface';
@@ -18,35 +19,41 @@ const createOrder = async (payload: IOrderData): Promise<Order> => {
 const getAllOrder = async (): Promise<Order[]> => {
   const result = await prisma.order.findMany({
     include: {
-      user: true,
+      user: {
+        select: {
+          name: true,
+          email: true,
+          role: true,
+          contactNo: true,
+          address: true,
+          profileImg: true,
+        },
+      },
     },
   });
   return result;
 };
 
 const getOrdersByCustomer = async (userId: string): Promise<Order[] | null> => {
-  const result = await prisma.order.findMany({
+  const orders = await prisma.order.findMany({
     where: {
       userId,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
-  return result;
+  return orders;
 };
 
 const getOrderByCustomer = async (
   orderId: string,
-  userId: string
+  user: JwtPayload
 ): Promise<Order | null> => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
-  }
-
   if (user.role === 'admin') {
     return prisma.order.findUnique({
       where: {
@@ -64,10 +71,8 @@ const getOrderByCustomer = async (
       throw new ApiError(httpStatus.OK, 'Order not found');
     }
 
-    if (order.userId === userId) {
+    if (order.userId === user.userId) {
       return order;
-    } else {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'User not authorized');
     }
   }
   throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Unexpected condition');
