@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServices = void 0;
 const prisma_1 = __importDefault(require("../../../constants/prisma"));
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const getAllUser = () => __awaiter(void 0, void 0, void 0, function* () {
     const results = yield prisma_1.default.user.findMany();
     return results;
@@ -22,6 +23,9 @@ const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.findUnique({
         where: { id },
     });
+    if (!result) {
+        throw new ApiError_1.default(404, 'User not exist');
+    }
     return result;
 });
 const updateUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,6 +33,9 @@ const updateUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* 
         where: { id },
         data: payload,
     });
+    if (!result) {
+        throw new ApiError_1.default(404, 'User not exist');
+    }
     return result;
 });
 const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {

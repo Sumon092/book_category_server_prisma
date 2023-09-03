@@ -1,6 +1,6 @@
 ## Live Link
 
-You can access the live version of this application [BOOK_CATEGORY](https://book_category.com).
+You can access the live version of this application [BOOK_CATEGORY](https://bookcategory-server.vercel.app).
 
 # Application Routes
 
