@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
@@ -7,23 +9,28 @@ import { UserServices } from './user.services';
 
 const getAllUser = catchAsync(async (req: Request, res: Response) => {
   const results = await UserServices.getAllUser();
-
-  sendResponse<User[]>(res, {
+  const withoutPass = results.map(result => {
+    const { password, ...resultWithoutPassword } = result;
+    return resultWithoutPassword;
+  });
+  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All user fetched successfully',
-    data: results,
+    data: withoutPass,
   });
 });
 const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const results = await UserServices.getSingleUser(id);
 
-  sendResponse<User | null>(res, {
+  const { password, ...resultWithoutPassword } = results;
+
+  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User fetched successfully',
-    data: results,
+    data: resultWithoutPassword,
   });
 });
 
@@ -31,12 +38,12 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const payload = req.body;
   const results = await UserServices.updateUser(id, payload);
-
-  sendResponse<User | null>(res, {
+  const { password, ...resultWithoutPassword } = results;
+  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User updated successfully',
-    data: results,
+    data: resultWithoutPassword,
   });
 });
 

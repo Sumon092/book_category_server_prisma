@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import prisma from '../../../constants/prisma';
+import ApiError from '../../../errors/ApiError';
 
 const getAllUser = async (): Promise<User[]> => {
   const results = await prisma.user.findMany();
@@ -7,23 +8,27 @@ const getAllUser = async (): Promise<User[]> => {
   return results;
 };
 
-const getSingleUser = async (id: string): Promise<User | null> => {
+const getSingleUser = async (id: string): Promise<User> => {
   const result = await prisma.user.findUnique({
     where: { id },
   });
-
+  if (!result) {
+    throw new ApiError(404, 'User not exist');
+  }
   return result;
 };
 
 const updateUser = async (
   id: string,
   payload: Partial<User>
-): Promise<User | null> => {
+): Promise<User> => {
   const result = await prisma.user.update({
     where: { id },
     data: payload,
   });
-
+  if (!result) {
+    throw new ApiError(404, 'User not exist');
+  }
   return result;
 };
 

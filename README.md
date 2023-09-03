@@ -23,17 +23,17 @@ You can access the live version of this application [BOOK_CATEGORY](https://book
 
 ### 4. Get User by ID
 
-- **Route:** `GET /api/v1/users/:userId`
+- **Route:** `GET /api/v1/users/37775524-15e7-4f40-9d97-d30e43e56187`
 - **Description:** Get a single user by their ID.
 
 ### 5. Update User
 
-- **Route:** `PATCH /api/v1/users/:userId`
+- **Route:** `PATCH /api/v1/users/37775524-15e7-4f40-9d97-d30e43e56187`
 - **Description:** Update a user's information by their ID.
 
 ### 6. Delete User
 
-- **Route:** `DELETE /api/v1/users/:userId`
+- **Route:** `DELETE /api/v1/users/37775524-15e7-4f40-9d97-d30e43e56187`
 - **Description:** Delete a user by their ID.
 
 ### 7. Get Profile
@@ -55,17 +55,17 @@ You can access the live version of this application [BOOK_CATEGORY](https://book
 
 ### 3. Get Category by ID
 
-- **Route:** `GET /api/v1/categories/:categoryId`
+- **Route:** `GET /api/v1/categories/de66e33b-ab44-410c-b298-973fc73692db`
 - **Description:** Get a single category by its ID.
 
 ### 4. Update Category
 
-- **Route:** `PATCH /api/v1/categories/:categoryId`
+- **Route:** `PATCH /api/v1/categories/de66e33b-ab44-410c-b298-973fc73692db`
 - **Description:** Update a category by its ID.
 
 ### 5. Delete Category
 
-- **Route:** `DELETE /api/v1/categories/:categoryId`
+- **Route:** `DELETE /api/v1/categories/de66e33b-ab44-410c-b298-973fc73692db`
 - **Description:** Delete a category by its ID.
 
 ## Book Routes
@@ -82,22 +82,22 @@ You can access the live version of this application [BOOK_CATEGORY](https://book
 
 ### 3. Get Books by Category
 
-- **Route:** `GET /api/v1/books/:categoryId/category`
+- **Route:** `GET /api/v1/books/ca939320-e124-4b4c-945d-bf742920b0a3/category`
 - **Description:** Get books by a specific category.
 
 ### 4. Get Book by ID
 
-- **Route:** `GET /api/v1/books/:id`
+- **Route:** `GET /api/v1/books/785b92e6-2d55-4aaf-a60d-e25084f9ceed`
 - **Description:** Get a single book by its ID.
 
 ### 5. Update Book
 
-- **Route:** `PATCH /api/v1/books/:id`
+- **Route:** `PATCH /api/v1/books/785b92e6-2d55-4aaf-a60d-e25084f9ceed`
 - **Description:** Update a book by its ID.
 
 ### 6. Delete Book
 
-- **Route:** `DELETE /api/v1/books/:id`
+- **Route:** `DELETE /api/v1/books/785b92e6-2d55-4aaf-a60d-e25084f9ceed`
 - **Description:** Delete a book by its ID.
 
 ## Order Routes
@@ -119,7 +119,7 @@ You can access the live version of this application [BOOK_CATEGORY](https://book
 
 ### 3. Get Order by ID
 
-- **Route:** `GET /api/v1/orders/:orderId`
+- **Route:** `GET /api/v1/orders/0c1b4244-78c6-4947-8b0f-c53b4233c222`
 - **Description:** Get a single order by its ID.
 
 ## Profile Route
